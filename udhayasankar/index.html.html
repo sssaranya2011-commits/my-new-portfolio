@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Udhayasankar | AI Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --accent: #00f5d4;
+            --accent-2: #9d4edd;
+            --accent-3: #00bbf9;
+            --gradient: linear-gradient(135deg, var(--accent), var(--accent-3), var(--accent-2));
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Massive Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2;
+            background: radial-gradient(circle at 50% 50%, #151522, #0a0a0f);
+        }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.5;
+            animation: float 20s infinite ease-in-out;
+        }
+        .orb:nth-child(1) { width: 600px; height: 600px; top: -10%; left: -10%; background: var(--accent-2); }
+        .orb:nth-child(2) { width: 500px; height: 500px; bottom: -5%; right: -5%; background: var(--accent); animation-delay: -5s; }
+        .orb:nth-child(3) { width: 400px; height: 400px; top: 40%; left: 60%; background: var(--accent-3); animation-delay: -10s; }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(40px, -60px) scale(1.1); }
+            66% { transform: translate(-30px, 30px) scale(0.95); }
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: -0.02em; }
+        .gradient-text {
+            background: var(--gradient);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 1.2rem 2rem;
+            background: rgba(10, 10, 15, 0.8); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--card-border); z-index: 100;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.4rem; }
+        .nav-links a {
+            color: var(--text-secondary); text-decoration: none; margin-left: 2rem; font-weight: 500;
+            transition: 0.3s; position: relative;
+        }
+        .nav-links a:hover { color: var(--accent); }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
+            background: var(--accent); transition: 0.3s;
+        }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* Layout */
+        section { max-width: 1100px; margin: 6rem auto; padding: 0 2rem; }
+        .section-title { font-size: 2.2rem; margin-bottom: 2.5rem; position: relative; display: inline-block; }
+        .section-title::after {
+            content: ''; position: absolute; bottom: -8px; left: 0; width: 50px; height: 4px;
+            background: var(--gradient); border-radius: 2px;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+            text-align: left; padding-top: 4rem;
+        }
+        .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1rem; line-height: 1.1; }
+        .hero p { font-size: 1.25rem; color: var(--text-secondary); max-width: 650px; margin-bottom: 2rem; }
+        .hero .typed-text { border-right: 2px solid var(--accent); padding-right: 4px; animation: blink 0.7s infinite; }
+        @keyframes blink { 50% { border-color: transparent; } }
+
+        .btn {
+            padding: 0.9rem 2rem; background: var(--gradient); color: #0a0a0f; font-weight: 600;
+            border: none; border-radius: 50px; cursor: pointer; font-size: 1rem; transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 245, 212, 0.3);
+        }
+        .btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 25px rgba(0, 245, 212, 0.4); }
+
+        /* About */
+        .about-content { font-size: 1.1rem; color: var(--text-secondary); max-width: 800px; line-height: 1.7; }
+
+        /* Skills */
+        .skill-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .skill-item { background: var(--card-bg); padding: 1.2rem; border-radius: 12px; border: 1px solid var(--card-border); }
+        .skill-header { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-weight: 600; }
+        .progress-bar { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--gradient); width: 0; border-radius: 4px; transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+
+        /* Projects */
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .project-card {
+            background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 1.5rem;
+            transition: 0.4s; position: relative; overflow: hidden;
+        }
+        .project-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: var(--gradient); opacity: 0; transition: 0.3s;
+        }
+        .project-card:hover { transform: translateY(-8px); box-shadow: var(--shadow); border-color: var(--accent); }
+        .project-card:hover::before { opacity: 1; }
+        .project-card h3 { margin-bottom: 0.5rem; font-size: 1.3rem; }
+        .project-card p { color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.95rem; }
+        .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .tag { background: rgba(255,255,255,0.08); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; color: var(--accent); }
+
+        /* Contact */
+        .contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .contact-info a { color: var(--accent-3); text-decoration: none; display: block; margin: 0.5rem 0; transition: 0.2s; }
+        .contact-info a:hover { text-shadow: 0 0 8px rgba(0, 187, 249, 0.6); }
+        .contact-form input, .contact-form textarea {
+            width: 100%; padding: 0.9rem; margin-bottom: 1rem; background: var(--card-bg); border: 1px solid var(--card-border);
+            border-radius: 8px; color: var(--text-primary); font-family: inherit; resize: vertical;
+        }
+        .contact-form input:focus, .contact-form textarea:focus { outline: none; border-color: var(--accent); }
+
+        /* Footer */
+        footer { text-align: center; padding: 2rem; color: var(--text-secondary); font-size: 0.9rem; border-top: 1px solid var(--card-border); }
+
+        /* Scroll Reveal */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .contact-wrapper { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            section { margin: 4rem auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="orb"></div><div class="orb"></div><div class="orb"></div>
+    </div>
+    <div class="grid-overlay"></div>
+
+    <nav>
+        <div class="logo gradient-text">UDHAYASANKAR</div>
+        <div class="nav-links">
+            <a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <header class="hero reveal">
+        <h1 class="gradient-text">Udhayasankar</h1>
+        <p>AI Engineer | <span class="typed-text" id="typed"></span></p>
+        <a href="#projects" class="btn">View My Work</a>
+    </header>
+
+    <section id="about" class="reveal">
+        <h2 class="section-title">About Me</h2>
+        <p class="about-content">I am a passionate AI Engineer specializing in building scalable machine learning models and intelligent systems. With expertise in deep learning, NLP, and computer vision, I transform complex data into actionable insights. I am dedicated to pushing the boundaries of AI technology to solve real-world problems.</p>
+    </section>
+
+    <section id="skills" class="reveal">
+        <h2 class="section-title">Technical Skills</h2>
+        <div class="skill-grid">
+            <div class="skill-item"><div class="skill-header"><span>Python</span><span>95%</span></div><div class="progress-bar"><div class="progress-fill" data-width="95%"></div></div></div>
+            <div class="skill-item"><div class="skill-header"><span>TensorFlow / PyTorch</span><span>90%</span></div><div class="progress-bar"><div class="progress-fill" data-width="90%"></div></div></div>
+            <div class="skill-item"><div class="skill-header"><span>NLP / LLMs</span><span>85%</span></div><div class="progress-bar"><div class="progress-fill" data-width="85%"></div></div></div>
+            <div class="skill-item"><div class="skill-header"><span>Data Visualization</span><span>88%</span></div><div class="progress-bar"><div class="progress-fill" data-width="88%"></div></div></div>
+            <div class="skill-item"><div class="skill-header"><span>MLOps / Docker</span><span>80%</span></div><div class="progress-bar"><div class="progress-fill" data-width="80%"></div></div></div>
+            <div class="skill-item"><div class="skill-header"><span>Computer Vision</span><span>85%</span></div><div class="progress-bar"><div class="progress-fill" data-width="85%"></div></div></div>
+        </div>
+    </section>
+
+    <section id="projects" class="reveal">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="project-grid">
+            <div class="project-card">
+                <h3>SmartDoc QA System</h3>
+                <p>An intelligent document Q&A system powered by RAG and LLMs, allowing users to chat with PDF documents instantly.</p>
+                <div class="tags"><span class="tag">LangChain</span><span class="tag">Pinecone</span><span class="tag">Python</span></div>
+            </div>
+            <div class="project-card">
+                <h3>NeuroFlow Pipeline</h3>
+                <p>Automated data pipeline for training and deploying deep learning models with real-time performance monitoring.</p>
+                <div class="tags"><span class="tag">TensorFlow</span><span class="tag">Kubernetes</span><span class="tag">AWS</span></div>
+            </div>
+            <div class="project-card">
+                <h3>Medical Image Analysis</h3>
+                <p>Computer vision model for detecting anomalies in X-rays with high accuracy and low latency processing.</p>
+                <div class="tags"><span class="tag">OpenCV</span><span class="tag">PyTorch</span><span class="tag">React</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="reveal">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-wrapper">
+            <div class="contact-info">
+                <p style="margin-bottom: 1rem; color: var(--text-secondary);">Open to opportunities in AI Engineering and Machine Learning. Let's build something amazing together.</p>
+                <a href="mailto:udhayasankar@email.com">📧 udhayasankar@email.com</a>
+                <a href="https://linkedin.com/in/udhayasankar" target="_blank">💼 linkedin.com/in/udhayasankar</a>
+                <a href="https://github.com/udhayasankar" target="_blank">🐙 github.com/udhayasankar</a>
+            </div>
+            <form class="contact-form">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea rows="4" placeholder="Your Message" required></textarea>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>© 2026 Udhayasankar. All rights reserved.</footer>
+
+    <script>
+        // Typing Effect
+        const phrases = ["Building Intelligent Solutions", "Transforming Data into Insights", "Pushing AI Boundaries"];
+        let phraseIndex = 0, charIndex = 0, isDeleting = false;
+        const typedEl = document.getElementById('typed');
+
+        function type() {
+            const current = phrases[phraseIndex];
+            typedEl.textContent = isDeleting ? current.substring(0, charIndex--) : current.substring(0, charIndex++);
+            
+            if (!isDeleting && charIndex > current.length) { setTimeout(() => isDeleting = true, 1500); }
+            else if (isDeleting && charIndex < 0) { isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; }
+            
+            setTimeout(type, isDeleting ? 40 : 80);
+        }
+        type();
+
+        // Scroll Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    if (entry.target.id === 'skills') {
+                        document.querySelectorAll('.progress-fill').forEach(bar => {
+                            bar.style.width = bar.dataset.width;
+                        });
+                    }
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
